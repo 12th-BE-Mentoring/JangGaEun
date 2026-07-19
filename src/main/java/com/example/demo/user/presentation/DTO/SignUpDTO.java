@@ -1,4 +1,4 @@
-package com.example.demo.user.presentation;
+package com.example.demo.user.presentation.DTO;
 
-public record signUpDTO() {
+public record SignUpDTO(String name, String pw) {
 }

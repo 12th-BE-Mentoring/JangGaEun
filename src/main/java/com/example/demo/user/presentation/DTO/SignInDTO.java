@@ -1,4 +1,4 @@
 package com.example.demo.user.presentation.DTO;
 
-public record signInDTO() {
+public record SignInDTO(String name, String pw) {
 }

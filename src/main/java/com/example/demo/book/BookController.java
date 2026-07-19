@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class BookController {
     final private BookService bookService;
-    @PostMapping()
+
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public String createBook(@RequestParam String name, @RequestParam int price){
         return bookService.bookCreate(name, price);
