@@ -21,9 +21,14 @@ public class JwtTokenProvider {
     private final RefreshTokenRepository refreshTokenRepository;
     private final Long expAccessTime=1000L*60*30;
     private final Long expRefreshTime=1000L*60*60*24*7;
-    public JwtTokenProvider(@Value("jwt.key")String key, RefreshTokenRepository refreshTokenRepository){
+    private final JwtProperties jwtProperties;
+    public JwtTokenProvider(
+            JwtProperties jwtProperties,
+            RefreshTokenRepository refreshTokenRepository
+    ){
         this.refreshTokenRepository = refreshTokenRepository;
-        byte[] temp = key.getBytes();
+        this.jwtProperties=jwtProperties;
+        byte[] temp = jwtProperties.secretKey().getBytes();
         this.key = Keys.hmacShaKeyFor(temp);
     }
     //토큰 생성
