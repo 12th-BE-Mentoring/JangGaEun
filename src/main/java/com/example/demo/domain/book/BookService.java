@@ -1,4 +1,4 @@
-package com.example.demo.book;
+package com.example.demo.domain.book;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

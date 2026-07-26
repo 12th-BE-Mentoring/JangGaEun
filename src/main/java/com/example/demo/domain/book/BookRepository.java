@@ -1,4 +1,4 @@
-package com.example.demo.book;
+package com.example.demo.domain.book;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
