@@ -3,6 +3,7 @@ package com.example.demo.global.security.jwt;
 import com.example.demo.domain.user.refreshToken.RefreshToken;
 import com.example.demo.domain.user.refreshToken.RefreshTokenRepository;
 import com.example.demo.global.response.dto.ResponseTokenDTO;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -67,5 +68,17 @@ public class JwtTokenProvider {
     }
     public ResponseTokenDTO createJwt(String sub){
         return createJwt(sub, new HashMap<>());
+    }
+
+    public Claims jwtParser(String token){
+        return Jwts.parser()
+                .verifyWith(key)
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
+    }
+
+    public String getSub(String token){
+        return jwtParser(token).getSubject();
     }
 }
