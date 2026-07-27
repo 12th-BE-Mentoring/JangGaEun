@@ -2,6 +2,8 @@ package com.example.demo.global.security.jwt;
 
 import com.example.demo.domain.user.refreshToken.RefreshToken;
 import com.example.demo.domain.user.refreshToken.RefreshTokenRepository;
+import com.example.demo.global.error.exception.CustomException;
+import com.example.demo.global.error.exception.ErrorCode;
 import com.example.demo.global.response.dto.ResponseTokenDTO;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
@@ -109,16 +111,17 @@ public class JwtTokenProvider {
     public boolean validateToken(String token) {
         try {
             // 토큰 파싱 시도 (비밀키로 서명 검증 및 만료 시간 확인)
-            Jwts.parser().verifyWith(key).build().parseSignedClaims(token);
+            Jwts.parser()
+                    .verifyWith(key)
+                    .build()
+                    .parseSignedClaims(token);
             return true;
-        } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
-            throw new IllegalArgumentException("잘못된 JWT 서명입니다.", e);
+        } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException | UnsupportedJwtException e) {
+            throw new CustomException(ErrorCode.INVALID_JWT);
         } catch (ExpiredJwtException e) {
-            throw new IllegalArgumentException("만료된 JWT 토큰입니다.", e);
-        } catch (UnsupportedJwtException e) {
-            throw new IllegalArgumentException("지원되지 않는 JWT 토큰입니다.", e);
+            throw new CustomException(ErrorCode.EXPIRED_JWT);
         } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("JWT 토큰이 잘못되었습니다.", e);
+            throw new IllegalArgumentException("JWT 토큰이 잘못되었습니다.");
         }
     }
 

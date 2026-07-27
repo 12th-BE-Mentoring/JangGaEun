@@ -17,9 +17,17 @@ public class CommonResponse {
             super(Map.of(key, value), statusCode);
         }
     }
+    public static class ErrorResponseEntity {
+        private final HttpStatus status;
+        private final String errorMessage;
+        public ErrorResponseEntity(ErrorCode errorCode){
+            this.status=errorCode.getStatus();
+            this.errorMessage=errorCode.getMessage();
+        }
+    }
 
     public StringResponseEntity ErrorResponse(ErrorCode errorCode){
-        return new StringResponseEntity("message", errorCode.getMessage(),errorCode.getStatus());
+        return new StringResponseEntity("error message", errorCode.getMessage(),errorCode.getStatus());
     }
 
     public StringResponseEntity MessageResponse(String msg, HttpStatus status){
