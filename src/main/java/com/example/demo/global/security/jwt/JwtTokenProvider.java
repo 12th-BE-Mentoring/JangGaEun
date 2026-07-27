@@ -93,7 +93,7 @@ public class JwtTokenProvider {
 
     //jwt필터에서 사용하는 메서드
     //헤더에서 토큰값만 추출, 없거나 틀리면 null
-    private String resolveToken(HttpServletRequest request) {
+    public String resolveToken(HttpServletRequest request) {
         // Authorization: 토큰 형태의 문자열을 읽음
         String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
 
