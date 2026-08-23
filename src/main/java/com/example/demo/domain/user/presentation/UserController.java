@@ -1,8 +1,8 @@
 package com.example.demo.domain.user.presentation;
 
 import com.example.demo.domain.user.UserService;
-import com.example.demo.domain.user.presentation.DTO.SignInDTO;
-import com.example.demo.domain.user.presentation.DTO.SignUpDTO;
+import com.example.demo.domain.user.presentation.DTO.LoginDTO;
+import com.example.demo.domain.user.presentation.DTO.JoinDTO;
 import com.example.demo.global.response.dto.ResponseTokenDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     final private UserService userService;
 
-    @PostMapping
-    public void signUp(@RequestBody SignUpDTO signUpDTO){
-        userService.signUp(signUpDTO.name(), signUpDTO.pw());
+    @PostMapping("/join")
+    public void join(@RequestBody JoinDTO joinDTO){
+        userService.join(joinDTO);
     }
-    @PostMapping("/signIn")
-    public ResponseTokenDTO signIn(@RequestBody SignInDTO signInDTO){
-        return userService.signIn(signInDTO.name(),signInDTO.pw());
+    @PostMapping("/login")
+    public ResponseTokenDTO login(@RequestBody LoginDTO loginDTO){
+        return userService.login(loginDTO);
     }
 }

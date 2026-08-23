@@ -8,7 +8,6 @@ import com.example.demo.global.response.dto.ResponseTokenDTO;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -75,7 +74,10 @@ public class JwtTokenProvider {
     }
 
     public ResponseTokenDTO createJwt(String sub, Map<String,?> customData){
-        return new ResponseTokenDTO(createAccessToken(sub, customData), createRefreshToken(sub, customData));
+        return new ResponseTokenDTO(
+                createAccessToken(sub, customData),
+                createRefreshToken(sub, customData)
+        );
     }
     public ResponseTokenDTO createJwt(String sub){
         return createJwt(sub, new HashMap<>());

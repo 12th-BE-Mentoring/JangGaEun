@@ -1,5 +1,7 @@
 package com.example.demo.domain.user;
 
+import com.example.demo.domain.user.presentation.DTO.JoinDTO;
+import com.example.demo.domain.user.presentation.DTO.LoginDTO;
 import com.example.demo.global.error.exception.CustomException;
 import com.example.demo.global.error.exception.ErrorCode;
 import com.example.demo.global.response.dto.ResponseTokenDTO;
@@ -17,16 +19,21 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
 
-    public void signUp(String name, String pw){
-        User user=new User();
-        user.name=name;
-        user.pw=passwordEncoder.encode(pw);
+    public void join(JoinDTO dto){
+        if (!dto.pw().equals(dto.checkPw())){
+            throw new CustomException(ErrorCode.NOT_EQUALS_PASSWORD);
+        }
+        User user= User.builder()
+                .pw(passwordEncoder.encode(dto.pw()))
+                .name(dto.name())
+                .build();
         userRepository.save(user);
     }
 
-    public ResponseTokenDTO signIn(String name, String pw){
-        User user=userRepository.findByName(name).orElseThrow(()->new CustomException(ErrorCode.FALSE_LOGIN));
-        if(passwordEncoder.matches(pw, user.pw)){
+    public ResponseTokenDTO login(LoginDTO dto){
+        User user=userRepository.findByName(dto.name())
+                .orElseThrow(()->new CustomException(ErrorCode.FALSE_LOGIN));
+        if(passwordEncoder.matches(dto.pw(), user.pw)){
             throw new CustomException(ErrorCode.FALSE_LOGIN);
         }
         return jwtTokenProvider.createJwt(user.id.toString());

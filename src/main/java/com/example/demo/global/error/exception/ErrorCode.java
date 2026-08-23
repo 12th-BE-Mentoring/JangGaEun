@@ -15,7 +15,9 @@ public enum ErrorCode {
     REFRESH_TOKEN_NOT_FOUND(HttpStatus.NOT_FOUND, "Refresh token Not Found"),
 
     USER_NOT_FOUND(HttpStatus.NOT_FOUND,"user not found"),
-    FALSE_LOGIN(HttpStatus.UNAUTHORIZED, "login is false");
+    FALSE_LOGIN(HttpStatus.UNAUTHORIZED, "login is false"),
+    NOT_EQUALS_PASSWORD(HttpStatus.BAD_REQUEST, "is not equals password");
+
 
     private final HttpStatus status;
     private final String message;
