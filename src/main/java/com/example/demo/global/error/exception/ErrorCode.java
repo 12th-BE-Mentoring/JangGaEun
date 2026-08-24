@@ -8,6 +8,9 @@ import org.springframework.http.HttpStatus;
 @Getter
 public enum ErrorCode {
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "server error"),
+
+    ANOTHER_USER_OWNED(HttpStatus.CONFLICT,"Owned by another user"),
+    BOOK_NOT_FOUND(HttpStatus.NOT_FOUND, "book not found"),
     // jwt
     EXPIRED_JWT(HttpStatus.UNAUTHORIZED, "Expired JWT"),
     INVALID_JWT(HttpStatus.UNAUTHORIZED, "Invalid JWT"),

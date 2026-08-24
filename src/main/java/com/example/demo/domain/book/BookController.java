@@ -15,4 +15,13 @@ public class BookController {
     public String createBook(@RequestParam String name, @RequestParam int price){
         return bookService.bookCreate(name, price);
     }
+
+    @PatchMapping("/borrow/{bookId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void borrowBook(
+            @RequestHeader("Authorization") String token,
+            @PathVariable Long bookId
+    ){
+        bookService.bookBorrow(token, bookId);
+    }
 }

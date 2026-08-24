@@ -27,4 +27,8 @@ public class Book {
     @ManyToOne
     @Builder.Default
     private User user=null;
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }
