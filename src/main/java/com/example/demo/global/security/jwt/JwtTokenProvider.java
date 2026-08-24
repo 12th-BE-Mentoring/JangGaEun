@@ -14,16 +14,18 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.codec.Hex;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import javax.crypto.SecretKey;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.example.demo.global.security.SecurityConfig.hashToken;
-import static com.example.demo.global.security.jwt.jwtFilter.AUTHORIZATION_HEADER;
-import static com.example.demo.global.security.jwt.jwtFilter.BEARER_PREFIX;
+import static com.example.demo.global.filter.jwtFilter.AUTHORIZATION_HEADER;
+import static com.example.demo.global.filter.jwtFilter.BEARER_PREFIX;
 
 @Component
 public class JwtTokenProvider {
@@ -42,6 +44,18 @@ public class JwtTokenProvider {
         byte[] temp = jwtProperties.secretKey().getBytes();
         this.key = Keys.hmacShaKeyFor(temp);
     }
+
+    public static String hashToken(String refreshToken) throws Exception {
+        //자바 scanner 해싱 버전
+        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        //utf-8방식으로 byte[]배열 얻은 것으로 해싱
+        byte[] hash = digest.digest(refreshToken.getBytes(StandardCharsets.UTF_8));
+
+        // Byte 배열을 16진수 문자열로 변환
+        // byte[]를 char[]로 변환 후 Str 생성
+        return new String(Hex.encode(hash));
+    }
+
     //토큰 생성
     private String createToken(String sub, Long expTime, Map<String,?> customData){
         Date now = new Date();
@@ -76,7 +90,7 @@ public class JwtTokenProvider {
     public ResponseTokenDTO createJwt(String sub, Map<String,?> customData){
         return new ResponseTokenDTO(
                 createAccessToken(sub, customData),
-                createRefreshToken(sub, customData)
+                createRefreshToken(sub, Map.of())
         );
     }
     public ResponseTokenDTO createJwt(String sub){

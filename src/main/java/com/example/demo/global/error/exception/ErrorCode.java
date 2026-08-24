@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 @AllArgsConstructor
 @Getter
 public enum ErrorCode {
+    UN_EXCEPTION(HttpStatus.INTERNAL_SERVER_ERROR, "Unexception error"),
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "server error"),
 
     ANOTHER_USER_OWNED(HttpStatus.CONFLICT,"Owned by another user"),

@@ -1,8 +1,6 @@
 package com.example.demo.domain.user;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
@@ -13,6 +11,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Table(name = "members")
 public class User {
     @Id
     @Builder.Default
@@ -23,4 +22,6 @@ public class User {
 
     @Column(nullable = false)
     String pw;
+
+    UserRole role;
 }

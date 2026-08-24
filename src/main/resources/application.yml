@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: demo1
+
+jwt:
+  secret-key: ${SECRET_KEY:this-is-a-sample-secret-key-that-is-at-least-32-bytes-long}
+

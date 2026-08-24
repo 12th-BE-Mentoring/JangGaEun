@@ -1,5 +1,6 @@
-package com.example.demo.global.security.jwt;
+package com.example.demo.global.filter;
 
+import com.example.demo.global.security.jwt.JwtTokenProvider;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

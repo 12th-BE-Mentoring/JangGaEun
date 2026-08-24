@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -26,6 +27,7 @@ public class UserService {
         User user= User.builder()
                 .pw(passwordEncoder.encode(dto.pw()))
                 .name(dto.name())
+                .role(dto.role())
                 .build();
         userRepository.save(user);
     }
@@ -36,6 +38,6 @@ public class UserService {
         if(passwordEncoder.matches(dto.pw(), user.pw)){
             throw new CustomException(ErrorCode.FALSE_LOGIN);
         }
-        return jwtTokenProvider.createJwt(user.id.toString());
+        return jwtTokenProvider.createJwt(user.id.toString(), Map.of("role", user.role));
     }
 }

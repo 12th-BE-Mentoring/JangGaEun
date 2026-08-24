@@ -1,6 +1,6 @@
-package com.example.demo.global.error;
+package com.example.demo.global.filter;
 
-import com.example.demo.global.CommonResponse;
+import com.example.demo.global.ResponseJson;
 import com.example.demo.global.error.exception.CustomException;
 import com.example.demo.global.error.exception.ErrorCode;
 import jakarta.servlet.FilterChain;
@@ -13,13 +13,13 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import tools.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
+import java.util.Map;
 
 @Slf4j
 @RequiredArgsConstructor
 public class ExceptionFilter extends OncePerRequestFilter {
 
     private final ObjectMapper objectMapper;
-    private final CommonResponse commonResponse;
     @Override
     protected void doFilterInternal(
             HttpServletRequest request,
@@ -37,7 +37,13 @@ public class ExceptionFilter extends OncePerRequestFilter {
     }
 
     private void sendErrorMessage(HttpServletResponse response, ErrorCode errorCode) throws IOException {
-        CommonResponse.Error error = new CommonResponse.Error(errorCode);
+        ResponseJson error = ResponseJson.builder()
+                        .success(false)
+                        .data(Map.of(
+                                "message", errorCode.getMessage(),
+                                "status",errorCode.getStatus()
+                        ))
+                        .build();
 
         response.setStatus(errorCode.getStatus().value());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
