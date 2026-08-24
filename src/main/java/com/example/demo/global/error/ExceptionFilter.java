@@ -37,10 +37,10 @@ public class ExceptionFilter extends OncePerRequestFilter {
     }
 
     private void sendErrorMessage(HttpServletResponse response, ErrorCode errorCode) throws IOException {
-        CommonResponse.ErrorResponseEntity errorResponseEntity = new CommonResponse.ErrorResponseEntity(errorCode);
+        CommonResponse.Error error = new CommonResponse.Error(errorCode);
 
         response.setStatus(errorCode.getStatus().value());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        objectMapper.writeValue(response.getWriter(), errorResponseEntity);
+        objectMapper.writeValue(response.getWriter(), error);
     }
 }

@@ -34,7 +34,7 @@ public class jwtFilter extends OncePerRequestFilter {
 
         // 2-1 토큰이 존재하고 유효성 검증을 통과한 경우에만 처리합니다.
         if (StringUtils.hasText(jwt) && jwtTokenProvider.validateToken(jwt)) {
-            //StringUtils.hasText(String) = 문자열이 null과 ""이 아닌경우 true
+            //StringUtils.hasText(Str) = 문자열이 null과 ""이 아닌경우 true
 
             //2-2 토큰의 정보를 추출 후 시큐리티 내부 저장소에 저장
             // 토큰 내부 데이터(Claims)를 기반으로 Security용 Authentication 객체를 만듭니다.

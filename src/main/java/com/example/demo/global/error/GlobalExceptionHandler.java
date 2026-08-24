@@ -5,6 +5,7 @@ import com.example.demo.global.error.exception.CustomException;
 import com.example.demo.global.error.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -14,13 +15,13 @@ public class GlobalExceptionHandler {
     private final CommonResponse commonResponse;
 
     @ExceptionHandler(CustomException.class)
-    public CommonResponse.StringResponseEntity customExceptionHandling(CustomException e) {
+    public ResponseEntity<CommonResponse.Error> customExceptionHandling(CustomException e) {
         final ErrorCode errorCode = e.getErrorCode();
         return commonResponse.ErrorResponse(errorCode);
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
-    public CommonResponse.StringResponseEntity exceptionHandling(IllegalArgumentException e){
+    public CommonResponse.Str exceptionHandling(IllegalArgumentException e){
         return commonResponse.MessageResponse("Unexception error", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

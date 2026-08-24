@@ -23,7 +23,7 @@ public class SecurityConfig {
         byte[] hash = digest.digest(refreshToken.getBytes(StandardCharsets.UTF_8));
 
         // Byte 배열을 16진수 문자열로 변환
-        // byte[]를 char[]로 변환 후 String 생성
+        // byte[]를 char[]로 변환 후 Str 생성
         return new String(Hex.encode(hash));
     }
 }

@@ -9,31 +9,31 @@ import java.util.Map;
 
 @Component
 public class CommonResponse {
-    public class StringResponseEntity extends ResponseEntity<Map<String,String>> {
-        public StringResponseEntity(Map<String, String> map, HttpStatus statusCode){
+    public static class Str extends ResponseEntity<Map<java.lang.String, java.lang.String>> {
+        public Str(Map<java.lang.String, java.lang.String> map, HttpStatus statusCode){
             super(map, statusCode);
         }
-        public StringResponseEntity(String key, String value, HttpStatus statusCode){
+        public Str(java.lang.String key, java.lang.String value, HttpStatus statusCode){
             super(Map.of(key, value), statusCode);
         }
     }
-    public static class ErrorResponseEntity {
+    public static class Error {
         private final HttpStatus status;
-        private final String errorMessage;
-        public ErrorResponseEntity(ErrorCode errorCode){
+        private final java.lang.String errorMessage;
+        public Error(ErrorCode errorCode){
             this.status=errorCode.getStatus();
             this.errorMessage=errorCode.getMessage();
         }
     }
 
-    public StringResponseEntity ErrorResponse(ErrorCode errorCode){
-        return new StringResponseEntity("error message", errorCode.getMessage(),errorCode.getStatus());
+    public ResponseEntity<Error> ErrorResponse(ErrorCode errorCode){
+        return ResponseEntity.status(errorCode.getStatus()).body(new Error(errorCode));
     }
 
-    public StringResponseEntity MessageResponse(String msg, HttpStatus status){
-        return new StringResponseEntity("message", msg, status);
+    public Str MessageResponse(java.lang.String msg, HttpStatus status){
+        return new Str("message", msg, status);
     }
-    public StringResponseEntity MessageResponse(String msg){
+    public Str MessageResponse(java.lang.String msg){
         return MessageResponse(msg, HttpStatus.OK);
     }
 }
