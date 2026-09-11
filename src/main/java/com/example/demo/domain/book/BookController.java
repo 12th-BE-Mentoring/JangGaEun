@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 public class BookController {
     final private BookService bookService;
 
-    @PreAuthorize("hasRole('MANAGER')")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public String createBook(@RequestParam String name, @RequestParam int price){
