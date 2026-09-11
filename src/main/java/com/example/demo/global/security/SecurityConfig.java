@@ -19,13 +19,15 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+    //filter chain
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http)throws Exception{
+        //csrf설정
         http.csrf(csrf->csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/user/**").permitAll()
-                        .requestMatchers(HttpMethod.POST , "/book").hasRole("MANAGER")
-                        .requestMatchers("/book/**").authenticated()
+                        .requestMatchers(HttpMethod.POST , "/book").hasRole("MANAGER") //새로운 책 등록을 매니저만 허용
+                        .requestMatchers("/book/**").authenticated() //책 빌리기 기능은 로그인 사용자만 허용
                 );
 
         return http.build();
